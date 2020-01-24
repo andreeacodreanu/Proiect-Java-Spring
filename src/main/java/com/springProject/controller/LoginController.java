@@ -26,6 +26,7 @@ public class LoginController {
     public ModelAndView login(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
+//        modelAndView.addObject("successMessage", "User has been registered successfully");
         return modelAndView;
     }
 

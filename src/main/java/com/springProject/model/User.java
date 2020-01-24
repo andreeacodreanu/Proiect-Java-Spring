@@ -44,4 +44,11 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<com.springProject.model.Role> roles;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "project_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))
+    private Set<com.springProject.model.Project> projects;
+    @OneToMany(mappedBy="user")
+    private Set<Holiday> holidays;
+    @OneToMany(mappedBy="user")
+    private Set<WorkLog> logs;
 }
