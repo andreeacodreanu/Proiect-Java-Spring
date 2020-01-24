@@ -26,7 +26,4 @@ public class Project {
     private String name;
     @Column(name = "active")
     private int active;
-    @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
-    private User user;
 }
