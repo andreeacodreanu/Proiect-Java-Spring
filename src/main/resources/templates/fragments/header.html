@@ -1,16 +1,12 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>doesnt matter</title>
-    <link rel="stylesheet" th:href="@{/css/navigation.css}" type="text/css"/>
+<head xmlns:th="http://www.thymeleaf.org">
+    <meta charset="UTF-8"/>
+    <title th:text="${title}">Hello, template</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
 </head>
-
-<body>
-
-<div th:fragment="topNavigation(currentlocation)" class="navcontainer">
-    <div class="navitem navtitle">Spaceship Application!!!!</div>
-    <div class="navitem navlocation" th:insert="${currentlocation}">Location... this html is not going be seen</div>
-    <div class="navitem"><a th:href="@{/spaceship/}">Overview</a></div>
-    <div class="navitem"><a th:href="@{/spaceship/new}">Create Spaceship</a></div>
-</div>
-
-</body>

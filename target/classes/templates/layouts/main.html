@@ -1,21 +1,16 @@
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
->
-<head>
-    <title layout:title-pattern="">Spaceship Application</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css"/>
-
-</head>
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block layout:insert="~{fragments/header}"/>
 <body>
-
-<div th:replace="fragments/header.html :: topNavigation(~{ :: .mylocation})">
-    <div class="mylocation">
-        Overview of spaceships
+<th:block layout:replace="~{fragments/navbar}"/>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <th:block layout:fragment="content"/>
+        </div>
     </div>
 </div>
-
-<section layout:fragment="content">asdfgh</section>
-
-
-
 </body>
+</html>
