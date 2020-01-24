@@ -9,5 +9,8 @@
         <module name="crud-delete" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="crud-delete" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
