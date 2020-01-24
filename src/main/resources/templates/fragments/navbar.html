@@ -19,7 +19,9 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li sec:authorize="isAuthenticated()">
-                    <span class="glyphicon glyphicon-log-out" th:href="@{/logout}"></span>&nbsp;Logout
+                    <a th:href="@{/logout}">
+                        <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout
+                    </a>
                 </li>
 
                 <li sec:authorize="isAnonymous()">
