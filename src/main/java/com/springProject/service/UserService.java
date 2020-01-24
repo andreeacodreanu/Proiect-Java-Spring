@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 @Service("userService")
 public class UserService {
@@ -29,6 +30,15 @@ public class UserService {
 
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public int getUserRole (User user) {
+        Set<Role> roles = user.getRoles();
+        Role admin = new Role(1,"ADMIN");
+        if (roles.contains(admin))
+            return 1;
+        else
+            return 2;
     }
 
     public User saveUser(User user) {
