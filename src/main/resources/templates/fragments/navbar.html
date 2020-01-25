@@ -16,6 +16,9 @@
                 <li th:classappend="${module == 'tasks' ? 'active' : ''}">
                     <a href="#" th:href="@{/}">Tasks</a>
                 </li>
+                    <li th:classappend="${module == 'projects' ? 'active' : ''}">
+                        <a href="#" th:href="@{/projectsPanel}">Projects Panel</a>
+                    </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li sec:authorize="isAuthenticated()">
