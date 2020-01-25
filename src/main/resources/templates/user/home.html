@@ -1,34 +1,46 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
 
-<head>
-    <title>User Page</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:with="http://www.thymeleaf.org/extras/with"
+      layout:decorate="~{layouts/main}"
+      with:title="'Hello, template'" >
+<th:block layout:fragment="content">
 
-<body>
-<div class="container" layout:fragment="content">
 
-    <form th:action="@{/logout}" method="get">
-        <button class="btn btn-md btn-danger btn-block" name="registration"
-                type="Submit">Logout
-        </button>
-    </form>
+    <div class="panel panel-default">
+        <div class="panel-heading" style="text-align: center">Log Work</div>
+        <div class="panel-body">
+            <form autocomplete="off" th:action="@{/worklog}"  method="post" class="form-horizontal">
+                <table class="table">
+                        <tr>
+                            <td>
+                                <select class="form-control" th:name="project">
+                                    <option value="NONE">Select project</option>
+                                    <option th:each="project : ${projectsList}" th:value="${project.id}" th:text="${project.name}"></option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" th:field="*{worklog.hours}" placeholder="Hours"
+                                       class="form-control"/>
+                            </td>
+                            <td style="display: none">
+                                <input type="text" th:field="*{worklog.date}" th:value="15/02/1997"
+                                       class="form-control"/>
+                            </td>
+                            <td>
+                                <input type="text" th:field="*{worklog.comment}" placeholder="Comment"
+                                       class="form-control"/>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary btn-block">Add</button>
+                            </td>
+                        </tr>
 
-    <div class="panel-group" style="margin-top:40px">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <span th:utext="${userName}"></span>
-            </div>
-
-            <p class="admin-message-text text-center" th:utext="${userMessage}"></p>
+                </table>
+            </form>
         </div>
     </div>
 
-</div>
-</body>
+</th:block>
 </html>

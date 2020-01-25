@@ -23,13 +23,9 @@ public class WorkLog {
     @Column(name = "log_id")
     private int id;
     @Column(name = "hours")
-    @NotEmpty()
     private int hours;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Temporal(TemporalType.DATE)
     @Column(name = "date")
-    @NotEmpty()
-    private Date date;
+    private String date;
     @Column(name = "comment")
     private String comment;
     @ManyToOne
