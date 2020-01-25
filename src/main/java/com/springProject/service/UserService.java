@@ -50,7 +50,16 @@ public class UserService {
     }
 
     public List<User> getEmployees() {
-        return userRepository.findAll();
+        List<User> emp = userRepository.findAll();
+
+        int i = 0;
+        for (User e:emp) {
+            if (e.getName().equals("admin")) {
+                emp.remove(i);
+            }
+            else i++;
+        }
+        return emp;
     }
 
     public JsonArray getUsersAsJson(List<User> list) {

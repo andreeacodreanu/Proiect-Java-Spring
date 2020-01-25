@@ -1,13 +1,12 @@
 package com.springProject.controller;
 
-import com.google.gson.JsonArray;
 import com.springProject.model.User;
-import com.springProject.model.WorkLog;
 import com.springProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,10 +27,9 @@ public class AdminController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         List<User> emp = userService.getEmployees();
-        JsonArray json = userService.getUsersAsJson(emp);
 
-        modelAndView.addObject("employees", emp);
         modelAndView.addObject("adminMessage", "USER ADMINISTRATIVE PANEL");
+        modelAndView.addObject("employees", emp);
         modelAndView.setViewName("admin/home");
         return modelAndView;
     }
@@ -40,13 +38,41 @@ public class AdminController {
     public ModelAndView delete(@RequestParam(value = "param", required=false) String email) {
         ModelAndView modelAndView = new ModelAndView();
 
+        userService.deleteUser(email);
         List<User> emp = userService.getEmployees();
         modelAndView.addObject("employees", emp);
         modelAndView.addObject("adminMessage", "USER ADMINISTRATIVE PANEL");
-        userService.deleteUser(email);
         modelAndView.setViewName("admin/home");
 
         return modelAndView;
+    }
 
+    @RequestMapping(value="/add", method = RequestMethod.GET)
+    public ModelAndView add() {
+        ModelAndView modelAndView = new ModelAndView();
+        User user = new User();
+        user.setPassword("Parola1");
+        user.setActive(1);
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("admin/addUser");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/add", method = RequestMethod.POST)
+    public ModelAndView addEmployee(@Valid User user, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("admin/home");
+        } else {
+            userService.saveUser(user);
+            modelAndView.addObject("successMessage", "User has been registered successfully");
+            modelAndView.addObject("user", new User());
+            List<User> emp = userService.getEmployees();
+            modelAndView.addObject("employees", emp);
+            modelAndView.setViewName("admin/home");
+        }
+        return modelAndView;
     }
 }
