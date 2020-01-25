@@ -7,20 +7,39 @@
       with:title="'Hello, template'">
 <th:block layout:fragment="content">
 
-
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <span th:utext="${userName}"></span>
+                <span th:utext="${adminMessage}"></span>
             </div>
-            <div class="panel-body">
-                <img th:src="@{/images/beer.jpg}" class="img-responsive center-block" width="400" height="400"
-                     alt="Beer"/>
-            </div>
-            <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th> Nume </th>
+                        <th> Prenume </th>
+                        <th> Email </th>
+                        <th> DELETE </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="employee : ${employees}" th:name="employee">
+                        <td><span th:text="${employee.name}"> Nume </span></td>
+                        <td><span th:text="${employee.lastName}"> Prenume </span></td>
+                        <td><span th:text="${employee.email}"> Email </span></td>
+                        <td>
+                            <form autocomplete="off" th:action="@{/delete(param=${employee.email})}"  method="post" class="form-horizontal">
+                                <button type="submit" class="btn btn-primary btn-block">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+
+
+
         </div>
     </div>
-
 
 </th:block>
 </html>

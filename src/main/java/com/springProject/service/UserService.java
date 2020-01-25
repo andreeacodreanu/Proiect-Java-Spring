@@ -1,16 +1,16 @@
 package com.springProject.service;
 
+import com.google.gson.JsonObject;
 import com.springProject.model.Role;
 import com.springProject.model.User;
 import com.springProject.repository.RoleRepository;
 import com.springProject.repository.UserRepository;
+import com.google.gson.JsonArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service("userService")
 public class UserService {
@@ -49,4 +49,36 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public List<User> getEmployees() {
+        return userRepository.findAll();
+    }
+
+    public JsonArray getUsersAsJson(List<User> list) {
+
+        JsonArray jsonArray = new JsonArray();
+
+        for(User user : list) {
+            JsonObject obj = new JsonObject();
+            obj.addProperty("lastname", user.getLastName());
+            obj.addProperty("firstname", user.getName());
+            obj.addProperty("email", user.getEmail());
+            obj.addProperty("active", user.getActive());
+            obj.addProperty("id", user.getId());
+
+            jsonArray.add(obj);
+        }
+        return jsonArray;
+    }
+
+    public boolean deleteUser(String email) {
+
+        try {
+            userRepository.delete(userRepository.findByEmail(email));
+            return true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
