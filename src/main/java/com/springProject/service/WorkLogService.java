@@ -14,6 +14,7 @@ import sun.security.krb5.internal.ccache.FileCredentialsCache;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
@@ -31,7 +32,11 @@ public class WorkLogService {
 
     public WorkLog saveWorkLog(WorkLog workLog, User user)  {
 
-        return workLogRepository.save(new WorkLog(1,10,"10/22/2020","jjj", user));
+        LocalDate date = LocalDate.now();
+
+        workLog.setDate(date.toString());
+        workLog.setUser(user);
+        return workLogRepository.save(workLog);
     }
 
 }

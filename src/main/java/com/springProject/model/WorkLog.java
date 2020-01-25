@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Data
@@ -30,4 +31,5 @@ public class WorkLog {
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
     private User user;
+
 }
