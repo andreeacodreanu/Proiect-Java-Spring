@@ -49,21 +49,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public List<User> findAllByRoles(/*Role*/ String role) {
-        return userRepository.findAllByRoles(role);
-    }
-
-    public List<User> getEmployees() {
-        List<User> emp = userRepository.findAll();
-
-        int i = 0;
-        for (User e:emp) {
-            if (e.getName().equals("admin")) {
-                emp.remove(i);
-            }
-            else i++;
-        }
-        return emp;
+    public List<User> findAllByRoles(String role) {
+        List<User> u = userRepository.findAllByRoles(role);
+        return u;
     }
 
     public JsonArray getUsersAsJson(List<User> list) {

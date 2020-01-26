@@ -12,6 +12,9 @@
             <ul class="nav navbar-nav">
 
                 <li sec:authorize="hasAuthority('ADMIN')">
+                    <a href="#" th:href="@{/adminPanel}">Employees Panel</a>
+                </li>
+                <li sec:authorize="hasAuthority('ADMIN')">
                         <a href="#" th:href="@{/projectsPanel}">Projects Panel</a>
                 </li>
                 <li sec:authorize="hasAuthority('USER')">

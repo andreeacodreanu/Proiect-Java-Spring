@@ -41,15 +41,10 @@ public class AdminController {
 
     @RequestMapping(value="/delete", method = RequestMethod.POST)
     public ModelAndView delete(@RequestParam(value = "param", required=false) String email) {
-        ModelAndView modelAndView = new ModelAndView();
 
         userService.deleteUser(email);
-        List<User> emp = userService.getEmployees();
-        modelAndView.addObject("employees", emp);
-        modelAndView.addObject("adminMessage", "USER ADMINISTRATIVE PANEL");
-        modelAndView.setViewName("admin/home");
+        return new ModelAndView("redirect:/adminPanel");
 
-        return modelAndView;
     }
 
     @RequestMapping(value="/add", method = RequestMethod.GET)
@@ -72,9 +67,9 @@ public class AdminController {
             modelAndView.setViewName("admin/home");
         } else {
             userService.saveUser(user);
-            modelAndView.addObject("successMessage", "User has been registered successfully");
+            modelAndView.addObject("adminMessage", "USER ADMINISTRATIVE PANEL");
             modelAndView.addObject("user", new User());
-            List<User> emp = userService.getEmployees();
+            List<User> emp = userService.findAllByRoles("USER");
             modelAndView.addObject("employees", emp);
             modelAndView.setViewName("admin/home");
         }
