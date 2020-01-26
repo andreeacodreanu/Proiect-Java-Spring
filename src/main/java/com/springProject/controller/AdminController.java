@@ -85,19 +85,6 @@ public class AdminController {
         return new ModelAndView("redirect:/projectsPanel");
     }
 
-    @RequestMapping(value="/editProject", method = RequestMethod.POST)
-    public ModelAndView editProject(@RequestParam(value = "param", required=false) int id) {
-        ModelAndView modelAndView = new ModelAndView();
-
-        Project project = projectService.findProjectById(id);
-        modelAndView.addObject("project", project);
-        List<User> users = userService.findAll();
-        modelAndView.addObject("users", users);
-        modelAndView.setViewName("admin/editProject");
-
-        return modelAndView;
-    }
-
     @RequestMapping(value="/addProject", method = RequestMethod.GET)
     public ModelAndView addProject() {
         ModelAndView modelAndView = new ModelAndView();
@@ -117,11 +104,26 @@ public class AdminController {
         return new ModelAndView("redirect:/projectsPanel");
     }
 
-//    @RequestMapping(value="/editProject", method = RequestMethod.POST)
-//    public ModelAndView editProject(@RequestParam(value = "param", required=false) Project project) {
-//        ModelAndView modelAndView = new ModelAndView();
-//
-//
-//        return modelAndView;
-//    }
+    @RequestMapping(value="/editProject", method = RequestMethod.POST)
+    public ModelAndView editProject(@RequestParam(value = "param", required=false) Integer id) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        Project project = projectService.findProjectById(id);
+        modelAndView.addObject("project", project);
+        List<User> users = userService.findAllByRoles("USER");
+        modelAndView.addObject("users", users);
+        modelAndView.setViewName("admin/editProject");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/editProjectSave", method = RequestMethod.POST)
+    public ModelAndView editProjectSave(@Valid Project project, BindingResult bindingResult) {
+        System.out.println(project.getName());
+        List<User> allocUsers = userService.findAllByProjects(project);
+        List<User> desallocUsers = userService.findUsersByProjectsIsNotContaining(project);
+
+
+        return new ModelAndView("redirect:/projectsPanel");
+    }
 }

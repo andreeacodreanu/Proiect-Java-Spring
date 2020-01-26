@@ -1,6 +1,7 @@
 package com.springProject.service;
 
 import com.google.gson.JsonObject;
+import com.springProject.model.Project;
 import com.springProject.model.Role;
 import com.springProject.model.User;
 import com.springProject.repository.RoleRepository;
@@ -85,4 +86,13 @@ public class UserService {
     public List<User> findAll() {
         return userRepository.findAll();
     }
+
+    public List<User> findAllByProjects(Project id) {
+        return userRepository.findAllByProjects(id);
+    }
+
+    public List<User> findUsersByProjectsIsNotContaining(Project id) {
+        return userRepository.findUsersByProjectsIsNotContaining(id);
+    }
+
 }

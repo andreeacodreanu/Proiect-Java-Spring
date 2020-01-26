@@ -1,5 +1,6 @@
 package com.springProject.repository;
 
+import com.springProject.model.Project;
 import com.springProject.model.Role;
 import com.springProject.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,5 +17,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query( "select u from User u inner join u.roles r where r.role = 'USER'")
     List<User> findAllByRoles(String role);
 
+/*    @Query( "select u from User u inner join u.projects r where r.project_id = id")*/
+    List<User> findAllByProjects(Project project);
+    List<User> findUsersByProjectsIsNotContaining(Project project);
 
 }
