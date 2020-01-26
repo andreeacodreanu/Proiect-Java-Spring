@@ -1,6 +1,8 @@
 package com.springProject.controller;
 
+import com.springProject.model.Project;
 import com.springProject.model.User;
+import com.springProject.service.ProjectService;
 import com.springProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -20,6 +22,8 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private ProjectService projectService;
 
     @RequestMapping(value="/adminPanel", method = RequestMethod.GET)
     public ModelAndView adminPanel(){
@@ -75,4 +79,51 @@ public class AdminController {
         }
         return modelAndView;
     }
+
+    @RequestMapping(value="/projectsPanel", method = RequestMethod.GET)
+    public ModelAndView projectsPanel(){
+        ModelAndView modelAndView = new ModelAndView();
+
+        List<Project> projects = projectService.findAll();
+
+        modelAndView.addObject("adminMessage", "PROJECTS ADMINISTRATIVE PANEL");
+        modelAndView.addObject("projects", projects);
+        modelAndView.setViewName("admin/projectsPanel");
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/deleteProject", method = RequestMethod.POST)
+    public ModelAndView deleteProject(@RequestParam(value = "param", required=false) int id) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        projectService.deleteProject(id);
+        List<Project> projects = projectService.findAll();
+
+        modelAndView.addObject("projects", projects);
+        modelAndView.addObject("adminMessage", "PROJECTS ADMINISTRATIVE PANEL");
+        modelAndView.setViewName("admin/projectsPanel");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/editProject", method = RequestMethod.POST)
+    public ModelAndView editProject(@RequestParam(value = "param", required=false) int id) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        Project project = projectService.findProjectById(id);
+        modelAndView.addObject("project", project);
+        List<User> users = userService.findAll();
+        modelAndView.addObject("users", users);
+        modelAndView.setViewName("admin/editProject");
+
+        return modelAndView;
+    }
+
+//    @RequestMapping(value="/editProject", method = RequestMethod.POST)
+//    public ModelAndView editProject(@RequestParam(value = "param", required=false) Project project) {
+//        ModelAndView modelAndView = new ModelAndView();
+//
+//
+//        return modelAndView;
+//    }
 }

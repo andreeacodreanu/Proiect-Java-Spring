@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:with="http://www.thymeleaf.org/extras/with"
+      layout:decorate="~{layouts/main}"
+      with:title="'Hello, template'">
+<th:block layout:fragment="content">
+
+    <div class="panel-group" style="margin-top:40px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span th:utext="${adminMessage}">
+                </span>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th> Name </th>
+                    <th> EDIT </th>
+                    <th> DELETE </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="project : ${projects}" th:name="employee">
+                    <td><span th:text="${project.name}"> Nume </span></td>
+                    <td>
+                        <form autocomplete="off" th:action="@{/editProject(param=${project.id})}"  method="post" class="form-horizontal">
+                            <button type="submit" class="btn btn-block">Edit project</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form autocomplete="off" th:action="@{/deleteProject(param=${project.id})}"  method="post" class="form-horizontal">
+                            <button type="submit" class="btn btn-primary btn-block">Delete project</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--<form autocomplete="off" th:action="@{/add}"  method="get" class="form-horizontal">-->
+                <!--<button type="submit" class="btn btn-primary btn-block">Add employee</button>-->
+            <!--</form>-->
+
+        </div>
+    </div>
+
+</th:block>
+</html>

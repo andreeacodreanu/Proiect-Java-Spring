@@ -42,13 +42,12 @@ public class UserController {
         User user = userService.findUserByEmail(auth.getName());
         WorkLog workLog = new WorkLog();
 
-
         modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName());
         modelAndView.addObject("projectsList", user.getProjects());
         modelAndView.addObject("worklog", workLog);
         modelAndView.setViewName("user/home");
-        return modelAndView;
 
+        return modelAndView;
     }
 
     @RequestMapping(value = "/worklog", method = RequestMethod.POST)
@@ -72,7 +71,6 @@ public class UserController {
         User user = userService.findUserByEmail(auth.getName());
 
         modelAndView.addObject("employee", user);
-
 
         modelAndView.setViewName("user/worklog-index");
 

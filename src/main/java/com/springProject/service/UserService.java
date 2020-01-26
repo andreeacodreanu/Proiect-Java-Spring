@@ -90,4 +90,7 @@ public class UserService {
             return false;
         }
     }
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
 }
