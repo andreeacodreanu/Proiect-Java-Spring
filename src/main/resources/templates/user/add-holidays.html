@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:with="http://www.thymeleaf.org/extras/with"
+      layout:decorate="~{layouts/main}"
+      with:title="'Hello, template'">
+<th:block layout:fragment="content">
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading" style="text-align: center">Ask for leave</div>
+        <div class="panel-body">
+            <form autocomplete="off" th:action="@{/add-holidays}" th:object="${holiday}" method="post" class="form-horizontal">
+                <table class="table">
+                    <tr>
+                        <td>
+                            <input type="date" name="startDate" th:field="*{startDate}">
+                        </td>
+                        <td>
+                            <input type="date" name="endDate" th:field="*{endDate}">
+                        </td>
+                        <td>
+                            <select class="form-control" th:name="holidayType">
+                                <option value="NONE">Select holiday type</option>
+                                <option th:each="holidayName : ${holidaysList}" th:value="${holidayName}" th:text="${holidayName}"></option>
+                            </select>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </td>
+                    </tr>
+
+                </table>
+            </form>
+        </div>
+    </div>
+
+</th:block>
+</html>
+

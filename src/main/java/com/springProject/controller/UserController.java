@@ -2,10 +2,8 @@ package com.springProject.controller;
 
 import javax.validation.Valid;
 
-import com.springProject.model.Project;
-import com.springProject.model.Role;
-import com.springProject.model.User;
-import com.springProject.model.WorkLog;
+import com.springProject.model.*;
+import com.springProject.service.HolidayService;
 import com.springProject.service.ProjectService;
 import com.springProject.service.UserService;
 import com.springProject.service.WorkLogService;
@@ -22,11 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.awt.*;
 import java.lang.reflect.Array;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 
 @Controller
 public class UserController {
@@ -37,6 +32,8 @@ public class UserController {
     private WorkLogService workLogService;
     @Autowired
     private ProjectService projectService;
+    @Autowired
+    private HolidayService holidayService;
 
     @RequestMapping(value="/worklog", method = RequestMethod.GET)
     public ModelAndView worklog(){
@@ -97,7 +94,12 @@ public class UserController {
     @RequestMapping(value = "/holidays/index", method = RequestMethod.GET)
     public ModelAndView holidaysIndex() {
         ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
 
+        List<Holiday> holidaysList = holidayService.findHolidaysByUserAndStatusEquals(user,1);
+
+        modelAndView.addObject("holidaysList", holidaysList);
         modelAndView.setViewName("user/holidays-index");
         return modelAndView;
     }
@@ -105,18 +107,28 @@ public class UserController {
     @RequestMapping(value = "/add-holidays", method = RequestMethod.GET)
     public ModelAndView holiday() {
         ModelAndView modelAndView = new ModelAndView();
+        List<String> holidaysList = new ArrayList<String>();
+        holidaysList.add("Concediu medical");
+        holidaysList.add("Concediu de odihna");
+        holidaysList.add("Concediu de eveniment special");
+        Holiday holiday = new Holiday();
 
-        modelAndView.setViewName("user/holidays-add");
+        modelAndView.addObject("holidaysList", holidaysList);
+        modelAndView.addObject("holiday", holiday);
+        modelAndView.setViewName("user/add-holidays");
         return modelAndView;
     }
 
     @RequestMapping(value = "/add-holidays", method = RequestMethod.POST)
-    public ModelAndView addHolidays() {
+    public ModelAndView addHolidays(Holiday holiday, @RequestParam(value = "holidayType", required = false) String holidayType) {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
-
+        holiday.setType(holidayType);
+        holiday.setStatus(0);
+        holiday.setUser(user);
+        holidayService.saveHoliday(holiday);
         return new ModelAndView("redirect:/holidays/index");
     }
 

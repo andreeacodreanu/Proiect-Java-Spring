@@ -23,18 +23,11 @@ public class Holiday {
     @Column(name = "holiday_id")
     private int id;
     @Column(name = "type")
-    @NotEmpty(message = "*Please provide a type")
     private String type;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Temporal(TemporalType.DATE)
     @Column(name = "start_date")
-    @NotEmpty()
-    private Date startDate;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Temporal(TemporalType.DATE)
+    private String startDate;
     @Column(name = "end_date")
-    @NotEmpty()
-    private Date endDate;
+    private String endDate;
     @Column(name = "status")
     private Integer status;
     @ManyToOne
