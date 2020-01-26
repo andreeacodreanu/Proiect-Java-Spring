@@ -32,4 +32,9 @@ public class ProjectService{
             return false;
         }
     }
+
+    public Project saveProject(Project project)  {
+
+        return projectRepository.save(project);
+    }
 }

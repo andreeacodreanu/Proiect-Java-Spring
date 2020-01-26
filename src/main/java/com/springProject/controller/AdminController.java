@@ -61,19 +61,9 @@ public class AdminController {
 
     @RequestMapping(value="/add", method = RequestMethod.POST)
     public ModelAndView addEmployee(@Valid User user, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
 
-        if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("admin/home");
-        } else {
-            userService.saveUser(user);
-            modelAndView.addObject("adminMessage", "USER ADMINISTRATIVE PANEL");
-            modelAndView.addObject("user", new User());
-            List<User> emp = userService.findAllByRoles("USER");
-            modelAndView.addObject("employees", emp);
-            modelAndView.setViewName("admin/home");
-        }
-        return modelAndView;
+        userService.saveUser(user);
+        return new ModelAndView("redirect:/adminPanel");
     }
 
     @RequestMapping(value="/projectsPanel", method = RequestMethod.GET)
@@ -90,16 +80,9 @@ public class AdminController {
 
     @RequestMapping(value="/deleteProject", method = RequestMethod.POST)
     public ModelAndView deleteProject(@RequestParam(value = "param", required=false) int id) {
-        ModelAndView modelAndView = new ModelAndView();
 
         projectService.deleteProject(id);
-        List<Project> projects = projectService.findAll();
-
-        modelAndView.addObject("projects", projects);
-        modelAndView.addObject("adminMessage", "PROJECTS ADMINISTRATIVE PANEL");
-        modelAndView.setViewName("admin/projectsPanel");
-
-        return modelAndView;
+        return new ModelAndView("redirect:/projectsPanel");
     }
 
     @RequestMapping(value="/editProject", method = RequestMethod.POST)
@@ -113,6 +96,25 @@ public class AdminController {
         modelAndView.setViewName("admin/editProject");
 
         return modelAndView;
+    }
+
+    @RequestMapping(value="/addProject", method = RequestMethod.GET)
+    public ModelAndView addProject() {
+        ModelAndView modelAndView = new ModelAndView();
+
+        Project project = new Project();
+        modelAndView.addObject("project", project);
+        modelAndView.setViewName("admin/addProject");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/addProject", method = RequestMethod.POST)
+    public ModelAndView addProject(@Valid Project project, BindingResult bindingResult) {
+
+        project.setActive(1);
+        projectService.saveProject(project);
+        return new ModelAndView("redirect:/projectsPanel");
     }
 
 //    @RequestMapping(value="/editProject", method = RequestMethod.POST)
