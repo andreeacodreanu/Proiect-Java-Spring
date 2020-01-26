@@ -1,6 +1,7 @@
 package com.springProject.controller;
 
 import com.springProject.model.Project;
+import com.springProject.model.Role;
 import com.springProject.model.User;
 import com.springProject.service.ProjectService;
 import com.springProject.service.UserService;
@@ -30,7 +31,7 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        List<User> emp = userService.getEmployees();
+        List<User> emp = userService.findAllByRoles("USER");
 
         modelAndView.addObject("adminMessage", "USER ADMINISTRATIVE PANEL");
         modelAndView.addObject("employees", emp);

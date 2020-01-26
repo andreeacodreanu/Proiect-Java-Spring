@@ -49,6 +49,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public List<User> findAllByRoles(/*Role*/ String role) {
+        return userRepository.findAllByRoles(role);
+    }
+
     public List<User> getEmployees() {
         List<User> emp = userRepository.findAll();
 
