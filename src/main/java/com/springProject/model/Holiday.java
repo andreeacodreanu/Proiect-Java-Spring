@@ -35,6 +35,8 @@ public class Holiday {
     @Column(name = "end_date")
     @NotEmpty()
     private Date endDate;
+    @Column(name = "status")
+    private Integer status;
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
     private User user;

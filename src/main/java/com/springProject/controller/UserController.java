@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -69,12 +72,52 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
+        Map<Project, List<WorkLog>> projectListWithWorkLog = new HashMap<Project, List<WorkLog> >();
+        Set<Project> projects = user.getProjects();
 
-        modelAndView.addObject("employee", user);
+        for (Project project :
+             projects) {
+
+            String s1 = " - ";
+
+            List<WorkLog> workLogList = workLogService.findAllByCommentContains(project.getName().concat(s1));
+            if(workLogList != null) {
+                projectListWithWorkLog.put(project, workLogList);
+            }
+
+        }
+
+        modelAndView.addObject("projectsWithWorklogs", projectListWithWorkLog);
 
         modelAndView.setViewName("user/worklog-index");
 
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/holidays/index", method = RequestMethod.GET)
+    public ModelAndView holidaysIndex() {
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("user/holidays-index");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/add-holidays", method = RequestMethod.GET)
+    public ModelAndView holiday() {
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("user/holidays-add");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/add-holidays", method = RequestMethod.POST)
+    public ModelAndView addHolidays() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+
+
+        return new ModelAndView("redirect:/holidays/index");
     }
 
 }

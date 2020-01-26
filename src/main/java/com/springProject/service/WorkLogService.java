@@ -15,10 +15,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service("workLogService")
 public class WorkLogService {
@@ -37,6 +34,11 @@ public class WorkLogService {
         workLog.setDate(date.toString());
         workLog.setUser(user);
         return workLogRepository.save(workLog);
+    }
+
+    public List<WorkLog> findAllByCommentContains(String projectName) {
+
+        return workLogRepository.findAllByCommentContains(projectName);
     }
 
 }

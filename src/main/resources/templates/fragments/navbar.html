@@ -20,6 +20,9 @@
                 <li sec:authorize="hasAuthority('USER')">
                     <a th:href="@{/worklog/index}">Projects</a>
                 </li>
+                <li sec:authorize="hasAuthority('USER')">
+                    <a th:href="@{/holidays/index}">Holidays</a>
+                </li>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
