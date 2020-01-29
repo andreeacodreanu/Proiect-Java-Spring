@@ -19,7 +19,8 @@
                         <th> Nume </th>
                         <th> Prenume </th>
                         <th> Email </th>
-                        <th> DELETE </th>
+                        <th> Holidays </th>
+                        <th> Delete </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -27,6 +28,11 @@
                         <td><span th:text="${employee.name}"> Nume </span></td>
                         <td><span th:text="${employee.lastName}"> Prenume </span></td>
                         <td><span th:text="${employee.email}"> Email </span></td>
+                        <td>
+                            <form autocomplete="off" th:action="@{/pendingHolidays(param=${employee.id})}"  method="post" class="form-horizontal">
+                                <button type="submit" class="btn btn-block">Check holidays</button>
+                            </form>
+                        </td>
                         <td>
                             <form autocomplete="off" th:action="@{/delete(param=${employee.email})}"  method="post" class="form-horizontal">
                                 <button type="submit" class="btn btn-primary btn-block">Delete</button>

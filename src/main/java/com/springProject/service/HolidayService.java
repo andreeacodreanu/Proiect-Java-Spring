@@ -29,14 +29,16 @@ public class HolidayService {
 
     }
 
-    public List<Holiday> findHolidaysByUserAndStatusEquals(User user, Integer status) {
+    public List<Holiday> findHolidaysByUser(User user) {
 
-        return holidayRepository.findHolidaysByUserAndStatusEquals(user, status);
+        return holidayRepository.findHolidaysByUser(user);
     }
 
     public Holiday saveHoliday(Holiday holiday) {
         return holidayRepository.save(holiday);
     }
 
+    public List<Holiday> findHolidaysByUserAndStatus(User user, Integer status) {return holidayRepository.findHolidaysByUserAndStatus(user,status);}
 
+    public Holiday findHolidayById(int id) { return holidayRepository.findHolidayById(id); }
 }

@@ -24,7 +24,13 @@
                         <td th:text="${holiday.startDate}"></td>
                         <td th:text="${holiday.endDate}"></td>
                         <td th:text="${holiday.type}"></td>
-                        <td th:text="${holiday.status} ? 'APPROVED' : 'NOT APPROVED'"></td>
+
+                        <div th:switch="${holiday.status}">
+                            <td th:case="0" style="align-content: center"><div class="glyphicon glyphicon-hourglass" style="margin-left: 14px"></div></td>
+                            <td th:case="1" style="align-content: center"><div class="glyphicon glyphicon-ok" style="margin-left: 14px"></div></td>
+                            <td th:case="2" style="align-content: center"><div class="glyphicon glyphicon-remove" style="margin-left: 14px"></div></td>
+                        </div>
+
                     </tr>
                 </table>
 

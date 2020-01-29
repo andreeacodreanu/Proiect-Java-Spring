@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:with="http://www.thymeleaf.org/extras/with"
+      layout:decorate="~{layouts/main}"
+      with:title="'Hello, template'" >
+<th:block layout:fragment="content">
+
+
+    <div class="panel panel-default"  >
+        <div class="panel-heading">
+                <span th:utext="${adminMessage}">
+                </span>
+        </div>
+        <div class="panel-body">
+
+            <table class="table">
+                <tr>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Type</th>
+                    <th>Approve</th>
+                    <th>Reject</th>
+                </tr>
+                <tr th:each="holiday : ${holidays}">
+                    <td th:text="${holiday.startDate}"></td>
+                    <td th:text="${holiday.endDate}"></td>
+                    <td th:text="${holiday.type}"></td>
+                    <td>
+                        <form autocomplete="off" th:action="@{/approveHoliday(param=${holiday.id})}"  method="post" class="form-horizontal">
+                            <button type="submit" class="btn btn-primary btn-block">Approve</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form autocomplete="off" th:action="@{/rejectHoliday(param=${holiday.id})}"  method="post" class="form-horizontal">
+                            <button type="submit" class="btn btn-primary btn-block">Reject</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+    </div>
+
+
+</th:block>
+</html>

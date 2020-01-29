@@ -8,9 +8,13 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
+import java.util.Map;
 
 @Repository("holidayRepository")
 public interface HolidayRepository extends JpaRepository<Holiday, Long> {
 
-    List<Holiday> findHolidaysByUserAndStatusEquals(User user, Integer status);
+    List<Holiday> findHolidaysByUser(User user);
+    List<Holiday> findHolidaysByUserAndStatus(User user, Integer status);
+    Holiday findHolidayById(int id);
+
 }

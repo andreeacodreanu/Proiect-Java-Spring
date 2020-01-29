@@ -95,4 +95,13 @@ public class UserService {
         return userRepository.findUsersByProjectsIsNotContaining(id);
     }
 
+    public User findUserById(int id) { return userRepository.findUserById(id); }
+
+    public void deleteProjectFromUser(int id, int id1) {
+        userRepository.deleteProjectFromUser(id, id1);
+    }
+
+    public void updateProjectAndUser(int id, int id1) {
+        userRepository.updateProjectAndUser(id,id1);
+    }
 }

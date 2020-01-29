@@ -29,7 +29,7 @@ public class Holiday {
     @Column(name = "end_date")
     private String endDate;
     @Column(name = "status")
-    private Integer status;
+    private Integer status; //0-pending 1-approved 2-not approved
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
     private User user;

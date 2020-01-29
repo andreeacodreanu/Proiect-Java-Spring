@@ -97,7 +97,7 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
-        List<Holiday> holidaysList = holidayService.findHolidaysByUserAndStatusEquals(user,1);
+        List<Holiday> holidaysList = holidayService.findHolidaysByUser(user);
 
         modelAndView.addObject("holidaysList", holidaysList);
         modelAndView.setViewName("user/holidays-index");
@@ -131,5 +131,16 @@ public class UserController {
         holidayService.saveHoliday(holiday);
         return new ModelAndView("redirect:/holidays/index");
     }
+
+    @RequestMapping(value = "/schedule", method = RequestMethod.GET)
+    public ModelAndView addHolidays() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+
+        modelAndView.setViewName("user/schedule");
+        return modelAndView;
+    }
+
 
 }
