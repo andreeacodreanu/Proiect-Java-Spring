@@ -67,6 +67,7 @@ public class AdminController {
     @RequestMapping(value="/add", method = RequestMethod.POST)
     public ModelAndView addEmployee(@Valid User user, BindingResult bindingResult) {
 
+        user.setPassword("Parola1");
         userService.saveUser(user);
         return new ModelAndView("redirect:/adminPanel");
     }
