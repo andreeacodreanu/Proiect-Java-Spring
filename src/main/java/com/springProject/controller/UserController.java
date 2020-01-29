@@ -132,15 +132,7 @@ public class UserController {
         return new ModelAndView("redirect:/holidays/index");
     }
 
-    @RequestMapping(value = "/schedule", method = RequestMethod.GET)
-    public ModelAndView addHolidays() {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
 
-        modelAndView.setViewName("user/schedule");
-        return modelAndView;
-    }
 
 
 }

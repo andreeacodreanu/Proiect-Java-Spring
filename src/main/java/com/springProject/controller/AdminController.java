@@ -1,12 +1,11 @@
 package com.springProject.controller;
 
-import com.springProject.model.Holiday;
-import com.springProject.model.Project;
-import com.springProject.model.Role;
-import com.springProject.model.User;
+import com.springProject.model.*;
+import com.springProject.repository.WorkLogRepository;
 import com.springProject.service.HolidayService;
 import com.springProject.service.ProjectService;
 import com.springProject.service.UserService;
+import com.springProject.service.WorkLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.*;
 
 @Controller
@@ -30,6 +30,8 @@ public class AdminController {
     private ProjectService projectService;
     @Autowired
     private HolidayService holidayService;
+    @Autowired
+    private WorkLogService worklogService;
 
     @RequestMapping(value="/adminPanel", method = RequestMethod.GET)
     public ModelAndView adminPanel(){
@@ -199,5 +201,42 @@ public class AdminController {
         holidayService.saveHoliday(holiday);
 
         return new ModelAndView("redirect:/adminPanel");
+    }
+
+
+    @RequestMapping(value = "/usersReports", method = RequestMethod.GET)
+    public ModelAndView usersReports() {
+        ModelAndView modelAndView = new ModelAndView();
+        List<User> emp = userService.findAllByRoles("USER");
+        Map<String,Integer> employees = new HashMap<String,Integer>();
+
+//        int m = Calendar.getInstance().get(Calendar.MONTH);
+//        m++;
+//        String mm = ((Integer) m).toString();
+//        int y = Calendar.getInstance().get(Calendar.YEAR);
+//        String yy = ((Integer) y).toString();
+//        String date = new String();
+//        if(m > 9) {
+//            date = yy.concat("-").concat(mm).concat("-").concat("01");
+//        }else {
+//            date = yy.concat("-").concat("0").concat(mm).concat("-").concat("01");
+//        }
+
+        for (User user:
+             emp) {
+            List<WorkLog> worklogs = worklogService.findAllByUser(user);
+            int sum = 0;
+            for (WorkLog worklog:
+                 worklogs) {
+                    sum = sum + worklog.getHours();
+            }
+
+            employees.put(user.getName(),sum);
+        }
+
+        modelAndView.addObject("adminMessage", "USERS REPORTS");
+        modelAndView.addObject("employees", employees);
+        modelAndView.setViewName("admin/usersReports");
+        return modelAndView;
     }
 }

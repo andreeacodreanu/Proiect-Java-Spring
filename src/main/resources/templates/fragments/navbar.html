@@ -20,6 +20,9 @@
                 <li sec:authorize="hasAuthority('ADMIN')">
                         <a href="#" th:href="@{/projectsPanel}">Projects Panel</a>
                 </li>
+                <li sec:authorize="hasAuthority('ADMIN')">
+                    <a href="#" th:href="@{/usersReports}">Users Reports Panel</a>
+                </li>
                 <li sec:authorize="hasAuthority('USER')">
                     <a th:href="@{/worklog}">Log work</a>
                 </li>
@@ -28,9 +31,6 @@
                 </li>
                 <li sec:authorize="hasAuthority('USER')">
                     <a th:href="@{/holidays/index}">Holidays</a>
-                </li>
-                <li sec:authorize="hasAuthority('USER')">
-                    <a th:href="@{/schedule}">Schedule</a>
                 </li>
 
             </ul>

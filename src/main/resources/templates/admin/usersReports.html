@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:with="http://www.thymeleaf.org/extras/with"
+      layout:decorate="~{layouts/main}"
+      with:title="'Hello, template'">
+<th:block layout:fragment="content">
+
+    <div class="panel-group" style="margin-top:40px; text-align: center">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span th:utext="${adminMessage}">
+                </span>
+            </div>
+            <table class="table">
+                    <tbody>
+                        <tr th:each="employee : ${employees}" th:name="employee">
+                            <td>Nume: <span th:text="${employee.getKey()}"></span>, Numar total de ore: <span th:text="${employee.getValue()}"> </span></td>
+
+                        </tr>
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+</th:block>
+</html>
