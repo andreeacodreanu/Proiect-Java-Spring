@@ -22,7 +22,7 @@ public class ContactInfo {
     @Column(name = "contact_info_id")
     private int id;
     @Column(name = "phone")
-    @Length(min = 10, max=10, message = "*Please insert a valid phone number")
+    @Length(min = 10, max = 10, message = "*Please insert a valid phone number")
     @NotEmpty(message = "*Please provide a phone number")
     private String phone;
     @Column(name = "city")
@@ -34,7 +34,7 @@ public class ContactInfo {
     @Column(name = "number")
     @NotEmpty(message = "*Please provide your street number")
     private Integer number;
-    @OneToOne(mappedBy = "contact_info")
+    @OneToOne(mappedBy = "contactInfo")
     private User user;
 
 }
