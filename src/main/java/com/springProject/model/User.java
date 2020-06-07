@@ -49,5 +49,8 @@ public class User {
     private Set<Holiday> holidays;
     @OneToMany(mappedBy="user")
     private Set<WorkLog> logs;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contact_info_id", referencedColumnName = "user_id")
+    private ContactInfo contact_info;
 
 }
