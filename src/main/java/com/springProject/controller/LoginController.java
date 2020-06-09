@@ -4,6 +4,8 @@ import javax.validation.Valid;
 
 import com.springProject.model.User;
 import com.springProject.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,10 +21,13 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    private Logger logger = LoggerFactory.getLogger(LoginController.class);
+
     @RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
     public ModelAndView login(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
+        logger.info(" USER LOGIN ");
 //        modelAndView.addObject("successMessage", "User has been registered successfully");
         return modelAndView;
     }
@@ -33,6 +38,7 @@ public class LoginController {
         User user = new User();
         modelAndView.addObject("user", user);
         modelAndView.setViewName("registration");
+        logger.info(" REGISTER USER ");
         return modelAndView;
     }
 
