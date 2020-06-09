@@ -58,3 +58,7 @@ address {
     color:#a94442;
     font-weight:bold;
 }
+
+.error {
+    color: red;
+}
