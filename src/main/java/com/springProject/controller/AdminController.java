@@ -1,7 +1,6 @@
 package com.springProject.controller;
 
 import com.springProject.model.*;
-import com.springProject.repository.WorkLogRepository;
 import com.springProject.service.HolidayService;
 import com.springProject.service.ProjectService;
 import com.springProject.service.UserService;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.*;
 
 @Controller
@@ -127,7 +124,7 @@ public class AdminController {
 //        }
         List<User> allocUsers = userService.findAllByProjects(project);
 
-        for(User u: users) {
+        for (User u: users) {
             if (allocUsers.contains(u)){
                 u.setActive(1);
             }
@@ -150,18 +147,18 @@ public class AdminController {
 
         List<User> usersList = userService.findAll();
         List<String> idList = Arrays.asList(myParams);
-//
+
         for (User user : usersList) {
 
             userService.deleteProjectFromUser(idP, user.getId());
 
             Integer userId = user.getId();
 
-            if(idList.contains(userId.toString())) {
+            if (idList.contains(userId.toString())) {
                 Set<Project> userProjects = user.getProjects();
                 userProjects.add(project);
                 user.setProjects(userProjects);
-                userService.saveUser(user);
+                userService.updateUserProjects(user);
 //              userService.updateProjectAndUser(idP,user.getId());
             }
         }

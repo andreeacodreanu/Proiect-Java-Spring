@@ -50,6 +50,15 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User updateUserProjects(User user) {
+        user.setPassword(user.getPassword());
+        user.setActive(1);
+        Role userRole = roleRepository.findByRole("USER");
+        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        return userRepository.save(user);
+    }
+
+
     public List<User> findAllByRoles(String role) {
         List<User> u = userRepository.findAllByRoles(role);
         return u;
