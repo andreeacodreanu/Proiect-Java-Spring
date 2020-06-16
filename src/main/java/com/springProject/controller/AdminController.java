@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Controller
 public class AdminController {
@@ -40,6 +43,7 @@ public class AdminController {
         modelAndView.addObject("adminMessage", "USER ADMINISTRATIVE PANEL");
         modelAndView.addObject("employees", emp);
         modelAndView.setViewName("admin/home");
+        Logger.getLogger(Service.class.getName()).log(Level.INFO, "ADMIN PANEL");
         return modelAndView;
     }
 
@@ -80,6 +84,7 @@ public class AdminController {
         modelAndView.addObject("adminMessage", "PROJECTS ADMINISTRATIVE PANEL");
         modelAndView.addObject("projects", projects);
         modelAndView.setViewName("admin/projectsPanel");
+        Logger.getLogger(Service.class.getName()).log(Level.INFO, "PROJECTS PANEL");
         return modelAndView;
     }
 

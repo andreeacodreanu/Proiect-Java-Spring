@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +23,8 @@ import java.awt.*;
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Controller
 public class UserController {
@@ -46,6 +49,8 @@ public class UserController {
         modelAndView.addObject("projectsList", user.getProjects());
         modelAndView.addObject("worklog", workLog);
         modelAndView.setViewName("user/home");
+
+        Logger.getLogger(Service.class.getName()).log(Level.INFO, "WORKLOG");
 
         return modelAndView;
     }
@@ -101,6 +106,8 @@ public class UserController {
 
         modelAndView.addObject("holidaysList", holidaysList);
         modelAndView.setViewName("user/holidays-index");
+        Logger.getLogger(Service.class.getName()).log(Level.INFO, "HOLIDAY INDEX");
+
         return modelAndView;
     }
 
