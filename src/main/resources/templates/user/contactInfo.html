@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:with="http://www.thymeleaf.org/extras/with"
+      layout:decorate="~{layouts/main}"
+      with:title="'Hello, template'">
+<th:block layout:fragment="content">
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading" style="text-align: center">Add contact info</div>
+        <div class="panel-body">
+            <form autocomplete="off" th:action="@{/editContactInfoSave(param=${info.id})}" th:object="${info}" method="post" class="form">
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        Phone Number:
+                        <input type="text" th:field="*{phone}" placeholder="Phone Number"
+                               class="form-control" th:value="${info.phone}"/>
+                    </div>
+                </div>
+                <br><br>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        City:
+                        <input type="text" th:field="*{city}" placeholder="City"
+                               class="form-control" th:value="${info.city}"/>
+                    </div>
+                </div>
+                <br><br>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        Street:
+                        <input type="text" th:field="*{street}" placeholder="Street"
+                               class="form-control" th:value="${info.street}"/>
+                    </div>
+                </div>
+                <br><br>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        Street Number:
+                        <input type="number" th:field="*{streetNumber}" placeholder="Number"
+                               class="form-control" th:value="${info.streetNumber}"/>
+                    </div>
+                </div>
+                <br><br>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <button type="submit" class="btn btn-primary btn-block">Add contact info</button>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+
+</th:block>
+</html>
+
