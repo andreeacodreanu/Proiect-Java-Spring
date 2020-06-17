@@ -1,10 +1,7 @@
 package com.springProject.controller;
 
 import com.springProject.model.*;
-import com.springProject.service.HolidayService;
-import com.springProject.service.ProjectService;
-import com.springProject.service.UserService;
-import com.springProject.service.WorkLogService;
+import com.springProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +29,8 @@ public class AdminController {
     private HolidayService holidayService;
     @Autowired
     private WorkLogService worklogService;
+    @Autowired
+    private ContactInfoService contactInfoService;
 
     @RequestMapping(value="/adminPanel", method = RequestMethod.GET)
     public ModelAndView adminPanel(){
@@ -68,10 +67,19 @@ public class AdminController {
     }
 
     @RequestMapping(value="/add", method = RequestMethod.POST)
-    public ModelAndView addEmployee(@Valid User user, BindingResult bindingResult) {
+    public ModelAndView addEmployee(User user) {
 
         user.setPassword("Parola1");
+        ContactInfo contactInfo = new ContactInfo();
+        contactInfo.setCity("");
+        contactInfo.setStreet("");
+        contactInfo.setPhone("");
+        contactInfo.setStreetNumber(0);
+        user.setContactInfo(contactInfo);
+//        contactInfo.setUser(user);
         userService.saveUser(user);
+
+
         return new ModelAndView("redirect:/adminPanel");
     }
 

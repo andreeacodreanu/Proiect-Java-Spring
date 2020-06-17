@@ -31,6 +31,9 @@
                 <li sec:authorize="hasAuthority('USER')">
                     <a th:href="@{/holidays/index}">Holidays</a>
                 </li>
+                <li sec:authorize="hasAuthority('USER')">
+                    <a th:href="@{/editContactInfo}">Contact Info</a>
+                </li>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">

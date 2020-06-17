@@ -3,10 +3,7 @@ package com.springProject.controller;
 import javax.validation.Valid;
 
 import com.springProject.model.*;
-import com.springProject.service.HolidayService;
-import com.springProject.service.ProjectService;
-import com.springProject.service.UserService;
-import com.springProject.service.WorkLogService;
+import com.springProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.security.core.Authentication;
@@ -37,6 +34,8 @@ public class UserController {
     private ProjectService projectService;
     @Autowired
     private HolidayService holidayService;
+    @Autowired
+    private ContactInfoService contactInfoService;
 
     @RequestMapping(value="/worklog", method = RequestMethod.GET)
     public ModelAndView worklog(){
@@ -139,7 +138,30 @@ public class UserController {
         return new ModelAndView("redirect:/holidays/index");
     }
 
+    @RequestMapping(value="/editContactInfo", method = RequestMethod.GET)
+    public ModelAndView editContactInfo() {
 
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        Integer contactInfoId = (user.getContactInfo()).getId();
+        ContactInfo contactInfo = contactInfoService.findById(contactInfoId);
+
+        modelAndView.addObject("info", contactInfo);
+
+        modelAndView.setViewName("user/contactInfo");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/editContactInfoSave", method = RequestMethod.POST)
+    public ModelAndView editContactInfoSave(@Valid ContactInfo contactInfo, @RequestParam(value = "param", required=false) Integer id) {
+
+        contactInfo.setId(id);
+        contactInfoService.updateContactInfo(contactInfo);
+
+        return new ModelAndView("redirect:/projectsPanel");
+    }
 
 
 }

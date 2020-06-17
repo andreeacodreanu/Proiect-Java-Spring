@@ -49,7 +49,7 @@ public class User {
     private Set<Holiday> holidays;
     @OneToMany(mappedBy="user")
     private Set<WorkLog> logs;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "contact_info_id", referencedColumnName = "contact_info_id")
     private ContactInfo contactInfo;
 
