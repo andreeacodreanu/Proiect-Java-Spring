@@ -2,6 +2,8 @@ package com.springProject.controller;
 
 import com.springProject.model.*;
 import com.springProject.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,8 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Controller
 public class AdminController {
@@ -32,6 +32,8 @@ public class AdminController {
     @Autowired
     private ContactInfoService contactInfoService;
 
+    private Logger logger = LoggerFactory.getLogger(LoginController.class);
+
     @RequestMapping(value="/adminPanel", method = RequestMethod.GET)
     public ModelAndView adminPanel(){
         ModelAndView modelAndView = new ModelAndView();
@@ -42,7 +44,7 @@ public class AdminController {
         modelAndView.addObject("adminMessage", "USER ADMINISTRATIVE PANEL");
         modelAndView.addObject("employees", emp);
         modelAndView.setViewName("admin/home");
-        Logger.getLogger(Service.class.getName()).log(Level.INFO, "ADMIN PANEL");
+        logger.info("ADMIN PANEL");
         return modelAndView;
     }
 
@@ -92,7 +94,7 @@ public class AdminController {
         modelAndView.addObject("adminMessage", "PROJECTS ADMINISTRATIVE PANEL");
         modelAndView.addObject("projects", projects);
         modelAndView.setViewName("admin/projectsPanel");
-        Logger.getLogger(Service.class.getName()).log(Level.INFO, "PROJECTS PANEL");
+        logger.info("PROJECTS PANEL");
         return modelAndView;
     }
 

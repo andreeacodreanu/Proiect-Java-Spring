@@ -4,6 +4,8 @@ import javax.validation.Valid;
 
 import com.springProject.model.*;
 import com.springProject.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.security.core.Authentication;
@@ -20,8 +22,6 @@ import java.awt.*;
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Controller
 public class UserController {
@@ -37,6 +37,8 @@ public class UserController {
     @Autowired
     private ContactInfoService contactInfoService;
 
+    private Logger logger = LoggerFactory.getLogger(LoginController.class);
+
     @RequestMapping(value="/worklog", method = RequestMethod.GET)
     public ModelAndView worklog(){
         ModelAndView modelAndView = new ModelAndView();
@@ -49,7 +51,7 @@ public class UserController {
         modelAndView.addObject("worklog", workLog);
         modelAndView.setViewName("user/home");
 
-        Logger.getLogger(Service.class.getName()).log(Level.INFO, "WORKLOG");
+        logger.info("WORKLOG");
 
         return modelAndView;
     }
@@ -105,7 +107,7 @@ public class UserController {
 
         modelAndView.addObject("holidaysList", holidaysList);
         modelAndView.setViewName("user/holidays-index");
-        Logger.getLogger(Service.class.getName()).log(Level.INFO, "HOLIDAY INDEX");
+        logger.info("HOLIDAY INDEX");
 
         return modelAndView;
     }
