@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import com.springProject.model.ContactInfo;
 import com.springProject.model.User;
 import com.springProject.service.UserService;
 import org.slf4j.Logger;
@@ -65,6 +66,14 @@ public class LoginController {
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("registration");
         } else {
+
+            ContactInfo contactInfo = new ContactInfo();
+            contactInfo.setCity("");
+            contactInfo.setStreet("");
+            contactInfo.setPhone("");
+            contactInfo.setStreetNumber(0);
+            user.setContactInfo(contactInfo);
+
             userService.saveUser(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
