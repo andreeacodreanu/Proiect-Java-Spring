@@ -83,7 +83,8 @@ public class UserController {
 
             String s1 = " - ";
 
-            List<WorkLog> workLogList = workLogService.findAllByCommentContains(project.getName().concat(s1));
+//            List<WorkLog> workLogList = workLogService.findAllByCommentContains(project.getName().concat(s1));
+            List<WorkLog> workLogList = workLogService.findAllByCommentContainsAndUser(project.getName().concat(s1),user);
             if(workLogList != null) {
                 projectListWithWorkLog.put(project, workLogList);
             }

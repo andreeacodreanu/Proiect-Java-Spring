@@ -12,5 +12,6 @@ public interface WorkLogRepository extends JpaRepository<WorkLog, Long> {
 
     List<WorkLog> findAllByCommentContains(String name);
     List<WorkLog> findAllByUser(User user);
+    List<WorkLog> findAllByCommentContainsAndUser(String projectName,User user);
 
 }

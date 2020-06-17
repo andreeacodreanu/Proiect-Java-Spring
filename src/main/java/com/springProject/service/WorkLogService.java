@@ -41,6 +41,11 @@ public class WorkLogService {
         return workLogRepository.findAllByCommentContains(projectName);
     }
 
+    public List<WorkLog> findAllByCommentContainsAndUser(String projectName,User user) {
+
+        return workLogRepository.findAllByCommentContainsAndUser(projectName, user);
+    }
+
     public List<WorkLog> findAllByUser(User user) {
         return workLogRepository.findAllByUser(user);
     }
