@@ -16,9 +16,16 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th> Nume </th>
-                        <th> Prenume </th>
-                        <th> Email </th>
+                        <th>
+                            <a th:href="@{'/adminPanel/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">Nume</a>
+                        </th>
+                        <th>
+                            <a th:href="@{'/adminPanel/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">Prenume</a>
+                        </th>
+                        <th>
+                            <a th:href="@{'/adminPanel/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}">Email</a>
+                        </th>
+
                         <th> Holidays </th>
                         <th> Delete </th>
                     </tr>
@@ -35,12 +42,38 @@
                         </td>
                         <td>
                             <form autocomplete="off" th:action="@{/delete(param=${employee.email})}"  method="post" class="form-horizontal">
-                                <button type="submit" class="btn btn-primary btn-block">Delete</button>
+                                <button type="submit" class="btn btn-primary btn-block" th:if="${employee.email == 'admin@admin.com'}" disabled >Delete</button>
+                                <button type="submit" class="btn btn-primary btn-block" th:if="${employee.email != 'admin@admin.com'}">Delete</button>
                             </form>
                         </td>
                     </tr>
                     </tbody>
                 </table>
+
+
+                <div>&nbsp;</div>
+                <div th:if="${totalPages > 1}" style="display: flex; justify-content: center;">
+
+
+                    <a th:if="${currentPage > 1}" th:href="@{'/adminPanel/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"><span aria-hidden="true">&laquo;</span></a>
+                    <span th:unless="${currentPage > 1}"><span aria-hidden="true">&laquo;</span></span>
+
+                    &nbsp;&nbsp;
+
+                    <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                        <a th:if="${currentPage != i}" th:href="@{'/adminPanel/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                        <span th:unless="${currentPage != i}">[[${i}]]</span>
+                        &nbsp;
+                    </span>
+
+                    <a th:if="${currentPage < totalPages}" th:href="@{'/adminPanel/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"><span aria-hidden="true">&raquo;</span></a>
+                    <span th:unless="${currentPage < totalPages}"><span aria-hidden="true">&raquo;</span></span>
+                    &nbsp;&nbsp;
+
+                </div>
+
+
+
             <form autocomplete="off" th:action="@{/add}"  method="get" class="form-horizontal">
                 <button type="submit" class="btn btn-primary btn-block">Add employee</button>
             </form>

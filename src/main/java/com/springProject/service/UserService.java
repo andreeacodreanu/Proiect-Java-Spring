@@ -8,6 +8,10 @@ import com.springProject.repository.RoleRepository;
 import com.springProject.repository.UserRepository;
 import com.google.gson.JsonArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +32,21 @@ public class UserService {
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
+
+
+
+    public Page<User> listAll(int pageNum, String sortField, String sortDir) {
+        int pageSize = 5;
+
+        PageRequest pageable = PageRequest.of(pageNum - 1, pageSize,
+                sortDir.equals("asc") ? Sort.by(sortField).ascending()
+                        : Sort.by(sortField).descending());
+
+        return userRepository.findAll(pageable);
+    }
+
+
+
 
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);

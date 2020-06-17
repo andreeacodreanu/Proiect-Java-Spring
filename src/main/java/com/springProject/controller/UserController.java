@@ -162,7 +162,7 @@ public class UserController {
         contactInfo.setId(id);
         contactInfoService.updateContactInfo(contactInfo);
 
-        return new ModelAndView("redirect:/projectsPanel");
+        return new ModelAndView("redirect:/editContactInfo");
     }
 
 

@@ -5,11 +5,15 @@ import com.springProject.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.*;
+
 
 @Controller
 public class AdminController {
@@ -34,19 +39,36 @@ public class AdminController {
 
     private Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-    @RequestMapping(value="/adminPanel", method = RequestMethod.GET)
-    public ModelAndView adminPanel(){
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        List<User> emp = userService.findAllByRoles("USER");
 
-        modelAndView.addObject("adminMessage", "USER ADMINISTRATIVE PANEL");
-        modelAndView.addObject("employees", emp);
-        modelAndView.setViewName("admin/home");
+    @RequestMapping("/adminPanel/{pageNum}")
+    public String viewPage(Model model,
+                           @PathVariable(name = "pageNum") int pageNum,
+                           @Param("sortField") String sortField,
+                           @Param("sortDir") String sortDir) {
+
+        Page<User> page = userService.listAll(pageNum, sortField, sortDir);
+
+        List<User> emp = page.getContent();
+
+        model.addAttribute("adminMessage", "USER ADMINISTRATIVE PANEL");
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("totalPages", page.getTotalPages());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
+        model.addAttribute("employees", emp);
         logger.info("ADMIN PANEL");
-        return modelAndView;
+        return "/admin/home";
     }
+
+
+    @RequestMapping("/adminPanel")
+    public String viewHomePage(Model model) {
+        return viewPage(model, 1, "name", "asc");
+    }
+
 
     @RequestMapping(value="/delete", method = RequestMethod.POST)
     public ModelAndView delete(@RequestParam(value = "param", required=false) String email) {
